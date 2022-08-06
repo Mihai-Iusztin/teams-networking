@@ -31,11 +31,13 @@ function displayTeams(teams) {
   //  </tr>`;
   // });
 
-  var teamsHTML = teams.map(function (team) {
-    console.info(team);
-    return getTeamHTML(team);
-  });
-  console.warn('r', teamsHTML);
+  // var teamsHTML = teams.map(function (team) {
+  //   console.info(team);
+  //   return getTeamHTML(team);
+  // });
+  // console.warn('r', teamsHTML);
+
+  var teamsHTML = teams.map(getTeamHTML);
 
   //afisare
   //   console.warn(teamsHTML);
