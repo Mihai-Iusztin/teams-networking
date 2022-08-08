@@ -12,35 +12,8 @@ function getTeamHTML(team) {
 }
 
 function displayTeams(teams) {
-  //   console.log('display', teams);
-
-  // var teamsHTML = '';
-  // teams.forEach((team) => {
-  // console.info(team);
-  // transforma in html
-  // teamsHTML += getTeamHTML(team);
-  //   `
-  //    <tr>
-  //       <td>${team.promotion}</td>
-  //       <td>${team.members}</td>
-  //       <td>${team.name}</td>
-  //       <td>
-  //       <a href="${team.url}">open</a>
-  //       </td>
-  //       <td>x e</td>
-  //  </tr>`;
-  // });
-
-  // var teamsHTML = teams.map(function (team) {
-  //   console.info(team);
-  //   return getTeamHTML(team);
-  // });
-  // console.warn('r', teamsHTML);
-
   var teamsHTML = teams.map(getTeamHTML);
 
-  //afisare
-  //   console.warn(teamsHTML);
   document.querySelector('table tbody').innerHTML = teamsHTML.join('');
 }
 
@@ -55,5 +28,27 @@ function loadTeams() {
       displayTeams(teams);
     });
 }
+function submitForm(e) {
+  // console.warn('submit', e);
+  e.preventDefault();
+  var promotion = document.querySelector('input[name=promotion]').value;
+  var members = document.querySelector('input[name=members]').value;
+  var name = document.querySelector('input[name=name]').value;
+  var url = document.querySelector('input[name=url]').value;
+
+  var team = {
+    promotion: promotion,
+    members: members,
+    name: name,
+    url: url,
+  };
+  console.warn('submit', JSON.stringify(team));
+}
+function initEvents() {
+  var form = document.getElementById('editForm');
+  // console.log(form);
+  form.addEventListener('submit', submitForm);
+}
 
 loadTeams();
+initEvents();
