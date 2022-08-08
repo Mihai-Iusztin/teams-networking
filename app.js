@@ -1,3 +1,7 @@
+function $(selector) {
+  return document.querySelector(selector);
+}
+
 function getTeamHTML(team) {
   return `
   <tr>
@@ -28,13 +32,20 @@ function loadTeams() {
       displayTeams(teams);
     });
 }
+
 function submitForm(e) {
   // console.warn('submit', e);
   e.preventDefault();
-  var promotion = document.querySelector('input[name=promotion]').value;
-  var members = document.querySelector('input[name=members]').value;
-  var name = document.querySelector('input[name=name]').value;
-  var url = document.querySelector('input[name=url]').value;
+
+  // var promotion = document.querySelector('input[name=promotion]').value;
+  // var members = document.querySelector('input[name=members]').value;
+  // var name = document.querySelector('input[name=name]').value;
+  // var url = document.querySelector('input[name=url]').value;
+
+  var promotion = $('input[name=promotion]').value;
+  var members = $('input[name=members]').value;
+  var name = $('input[name=name]').value;
+  var url = $('input[name=url]').value;
 
   var team = {
     promotion: promotion,
