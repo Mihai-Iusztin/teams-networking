@@ -9,9 +9,11 @@ function getTeamHTML(team) {
      <td>${team.members}</td>
      <td>${team.name}</td>
      <td>
-     <a href="${team.url}">open</a>
+     <a href="${team.url}" target="_blank">open</a>
      </td>
-     <td>x e</td>
+     <td>
+     <a href="#" data-id= "${team.id}" class = "delete-btn">✔<a/>
+     </td>
 </tr>`;
 }
 
@@ -41,13 +43,7 @@ function createTeamRequest(team) {
 }
 
 function submitForm(e) {
-  // console.warn('submit', e);
   e.preventDefault();
-
-  // var promotion = document.querySelector('input[name=promotion]').value;
-  // var members = document.querySelector('input[name=members]').value;
-  // var name = document.querySelector('input[name=name]').value;
-  // var url = document.querySelector('input[name=url]').value;
 
   const promotion = $('input[name=promotion]').value;
   const members = $('input[name=members]').value;
@@ -73,6 +69,14 @@ function initEvents() {
   const form = document.getElementById('editForm');
   // console.log(form);
   form.addEventListener('submit', submitForm);
+  form.querySelector('tbody').addEventListener('click', (e) => {
+    // console.warn('click', e);
+    console.warn('click', e.target);
+    if (e.target.matches('a.delete-btn')) {
+      const id = e.target.getAttribute('data-id');
+      console.warn('click pe link', id);
+    }
+  });
 }
 
 loadTeams();
