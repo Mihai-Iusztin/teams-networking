@@ -7,6 +7,14 @@ table{
     width: 90%;
 }
 
+#editForm tfoot input[type = "text"] {
+    width: 100%;
+}
+
+input:not([type="image" i]) {
+    box-sizing: border-box;
+}
+
 th {
     background: rgb(54, 9, 151);
     font-size: 1.5rem;
