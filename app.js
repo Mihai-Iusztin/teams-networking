@@ -123,8 +123,21 @@ function startEditTeam(id) {
 }
 
 function initEvents() {
+  $('#search').addEventListener('input', (e) => {
+    // const search = e.target.value;
+    const search = e.target.value.toLowerCase();
+    console.log(search);
+    const teams = allTeams.filter((team) => {
+      console.log('filter', team);
+      // return team.promotion === search;
+      // return team.promotion.includes(search);
+      // return team.promotion.toLowerCase().includes(search.toLowerCase());
+      return team.promotion.toLowerCase().includes(search);
+    });
+    console.log(teams);
+  });
+
   const form = $('#editForm');
-  // console.log(form);
   form.addEventListener('submit', submitForm);
   form.addEventListener('reset', () => {
     console.warn('reset');
