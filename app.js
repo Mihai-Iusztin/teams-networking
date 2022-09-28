@@ -135,6 +135,7 @@ function initEvents() {
       return team.promotion.toLowerCase().includes(search);
     });
     console.log(teams);
+    displayTeams(teams);
   });
 
   const form = $('#editForm');
