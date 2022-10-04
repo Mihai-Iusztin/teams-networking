@@ -1,5 +1,37 @@
+const API = {
+  CREATE: {
+    URL: 'http://localhost:3000/teams/create',
+    METHOD: 'POST',
+  },
+  READ: {
+    URL: 'http://localhost:3000/teams',
+    METHOD: 'GET',
+  },
+  UPDATE: {
+    URL: 'http://localhost:3000/teams/update',
+    METHOD: 'PUT',
+  },
+  DELETE: {
+    URL: 'http://localhost:3000/teams/delete',
+    METHOD: 'DELETE',
+  },
+};
+
 let allTeams = [];
 let editId;
+
+const isDemo = true || location.host === 'mihai-iusztin.github.io';
+const inlineChanges = isDemo;
+if (isDemo) {
+  API.READ.URL = 'data/teams.json';
+  API.DELETE.URL = 'data/delete.json';
+  API.CREATE.URL = 'data/create.json';
+  API.UPDATE.URL = 'data/update.json';
+
+  API.DELETE.METHOD = 'GET';
+  API.CREATE.METHOD = 'GET';
+  API.UPDATE.METHOD = 'GET';
+}
 
 function $(selector) {
   return document.querySelector(selector);
@@ -28,7 +60,7 @@ function displayTeams(teams) {
 }
 
 function loadTeams() {
-  fetch('http://localhost:3000/teams-json')
+  fetch(API.READ.URL)
     .then((r) => r.json())
 
     .then((teams) => {
@@ -36,35 +68,37 @@ function loadTeams() {
       displayTeams(teams);
     });
 }
-
+const method = API.CREATE.METHOD;
 function createTeamRequest(team) {
-  return fetch('http://localhost:3000/teams-json/create', {
-    method: 'POST',
+  return fetch(API.CREATE.URL, {
+    method,
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(team),
+    body: method === 'GET' ? null : JSON.stringify(team),
   });
 }
 
 function removeTeamRequest(id) {
+  const method = API.DELETE.METHOD;
   // console.warn('remove', id);
-  return fetch('http://localhost:3000/teams-json/delete', {
-    method: 'DELETE',
+  return fetch(API.DELETE.URL, {
+    method,
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ id: id }),
+    body: method === 'GET' ? null : JSON.stringify({ id }),
   }).then((r) => r.json());
 }
 
 function updateTeamRequest(team) {
-  return fetch('http://localhost:3000/teams-json/update', {
-    method: 'PUT',
+  const method = API.UPDATE.METHOD;
+  return fetch(API.UPDATE.URL, {
+    method,
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(team),
+    body: method === 'GET' ? null : JSON.stringify(team),
   }).then((r) => r.json());
 }
 
@@ -99,10 +133,13 @@ function submitForm(e) {
     // console.log('pls edit', editId, team);
     updateTeamRequest(team).then((status) => {
       console.warn('status', status);
-      if (status.success) {
-        $('#editForm').reset();
+      if (inlineChanges) {
+        allTeams = allTeams.map((t) => (t.id === editId ? team : t));
+        displayTeams(allTeams);
+      } else {
         loadTeams();
       }
+      document.querySelector('#editForm').reset();
     });
   } else {
     createTeamRequest(team)
@@ -110,7 +147,13 @@ function submitForm(e) {
       .then((status) => {
         console.warn('status', status);
         if (status.success) {
-          location.reload();
+          if (inlineChanges) {
+            allTeams = [...allTeams, { ...team, id: status.id }];
+            displayTeams(allTeams);
+          } else {
+            loadTeams();
+          }
+          document.querySelector('#editForm').reset();
         }
       });
   }
@@ -155,7 +198,12 @@ function initEvents() {
       removeTeamRequest(id).then((status) => {
         // console.warn('preview', status); //preview {success:true}
         if (status.success) {
-          loadTeams();
+          if (inlineChanges) {
+            allTeams = allTeams.filter((team) => team.id !== id);
+            displayTeams(allTeams);
+          } else {
+            loadTeams();
+          }
         }
       });
     } else if (e.target.matches('a.edit-btn')) {

@@ -1,10 +1,47 @@
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100%;
+    background-color: rgb(224, 243, 246);
+}
+
+
+header {
+    display: flex;
+    justify-content: space-between;
+    background-image: url('data/header_img1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+    height: 150px;
+    width: 100%;
+}
+header h1 {
+    color: white;
+    margin: 1.5rem 2.5rem;
+}
+
+#search {
+    height: 2rem;
+    width: 9.5rem;
+   margin: 7rem 2.5rem 0 0;
+   border-radius: 10px;
+}
 table, th, td {
     border: 1px solid black;
     font-size: 1rem; 
 }
 
 table{
-    width: 90%;
+    width: 100%;
+    background-color: aliceblue;
+}
+
+table tr:nth-child(even) {
+    background-color: rgb(226, 245, 247);
 }
 
 #editForm tfoot input[type = "text"] {
@@ -16,7 +53,7 @@ input:not([type="image" i]) {
 }
 
 th {
-    background: rgb(54, 9, 151);
+    background: rgb(1, 1, 134);
     font-size: 1.5rem;
     padding: 0.25rem;
     color: white;
