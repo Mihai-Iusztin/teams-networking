@@ -1,18 +1,18 @@
 const API = {
   CREATE: {
-    URL: 'http://localhost:3000/teams/create',
+    URL: 'http://localhost:3000/teams-json/create',
     METHOD: 'POST',
   },
   READ: {
-    URL: 'http://localhost:3000/teams',
+    URL: 'http://localhost:3000/teams-json',
     METHOD: 'GET',
   },
   UPDATE: {
-    URL: 'http://localhost:3000/teams/update',
+    URL: 'http://localhost:3000/teams-json/update',
     METHOD: 'PUT',
   },
   DELETE: {
-    URL: 'http://localhost:3000/teams/delete',
+    URL: 'http://localhost:3000/teams-json/delete',
     METHOD: 'DELETE',
   },
 };
@@ -20,7 +20,7 @@ const API = {
 let allTeams = [];
 let editId;
 
-const isDemo = true || location.host === 'mihai-iusztin.github.io';
+const isDemo = false || location.host === 'mihai-iusztin.github.io';
 const inlineChanges = isDemo;
 if (isDemo) {
   API.READ.URL = 'data/teams.json';
