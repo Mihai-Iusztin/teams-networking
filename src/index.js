@@ -218,3 +218,4 @@ function initEvents() {
 
 loadTeams();
 initEvents();
+console.log('Hyyyy!');
